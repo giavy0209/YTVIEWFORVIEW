@@ -1,0 +1,231 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+input:focus,button:focus{
+    outline: none;
+}
+a{
+    text-decoration: none;
+}
+.alert {
+    text-align: center;
+    color: #ff0000;
+}
+button{
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: blue;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+}
+.container{
+    width: 100vw;
+    margin-top: 20px;
+    height: calc(100vh - 140px);
+    overflow-y: scroll ;
+    overflow-x: hidden;
+    padding: 0 10px;
+}
+
+.container::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: #aaa;
+  }
+
+header{
+    padding: 10px;
+    font-size: 0;
+    background-color: #ff4f4f;
+}
+header >*{
+    width: 50%;
+    display: inline-block;
+}
+header .right {
+    cursor: pointer;
+}
+header .right p{
+    text-align: right;
+}
+header > * p{
+    font-size: 14px;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    font-size: 0;
+    width: 100%;
+    border-top: 1px solid #000;
+}
+
+footer > * {
+    display: inline-block;
+    font-size: 14px;
+    width: 33.3333%;
+    text-align: center;
+    padding: 5px 0;
+    cursor: pointer;
+    color: #4a4a4a;
+    font-size: 18px;
+}
+footer .active{
+    background-color: #ccc;
+}
+
+#login{
+    width: 100%;
+    text-align: center;
+}
+#login button{
+    width: 35%;
+}
+#login .button-fb{
+    text-align: center;
+}
+#login a{
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    width: 70%;
+    background-color: blue;
+    display: inline-block;
+}
+#login input{
+    width: 70%;
+    padding: 5px;
+    border-radius: 5px;
+}
+#login > * + *{
+    margin-top: 5px;
+}
+
+#campain{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: 'row';
+    flex-wrap: wrap;
+}
+#campain >p{
+    font-size: 12px;
+    text-align: left;
+    color: #ff0000;
+}
+#campain input{
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+}
+#campain .select{
+    width: 50%;
+    display: inline-block;
+    padding: 5px;
+}
+#campain .select select{
+    width: 100%;
+}
+#campain button{
+    width: 100%;
+}
+#campain .list-running{
+    margin-top: 20px;
+    width: 100%;
+}
+#campain .running{
+    border: 1px solid #000;
+    width: 100%;
+    overflow-wrap: break-word;
+    text-align: left;
+    cursor: pointer;
+    margin-top: 20px;
+    position: relative;
+}
+#campain .running i{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+#view{
+    text-align: center;
+    display: flex;
+    flex-direction: 'row';
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#view button{
+    width: 55%;
+    margin-top: 10px;
+}
+#view .video-detail{
+    width: 50%;
+    margin-top: 20px;
+    border: 1px solid #000;
+}
+#earnmore{
+    text-align: center;
+    display: flex;
+    flex-direction: 'row';
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#earnmore input{
+    width: 100%;
+    padding: 5px ;
+    border-radius: 5px;
+}
+
+#earnmore button{
+    margin-top: 5px;
+}
+#earnmore p{
+    color: aqua;
+    text-align: left;
+}
+#profile input{
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+}
+#profile button{
+    width: 100%;
+    margin-top: 10px;
+}
+.mask-loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    z-index: 99;
+    display: block;
+}
+.mask-loading.off{
+    display: none;
+}
+.mask-loading img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999999999999;
+    pointer-events: none;
+    width: 50px;
+    height: 50px;
+}
+button.button-disable{
+background-color: #ccc;
+pointer-events: none;
+}
+
