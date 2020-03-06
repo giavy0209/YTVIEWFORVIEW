@@ -1,11 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react'
 
 export default function MainComponentLogin(props){
-    const currentVersion = '1.2.0';
+    
     let {setDisplayLoading,socket,ipcRenderer} = props
     const [Alert,setAlert] = useState('')
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [currentVersion, setcurrentVersion] = useState('');
 
     const login = useCallback(()=>{
         if(username.length <6 || password.length < 6){
@@ -54,9 +55,10 @@ export default function MainComponentLogin(props){
         })
         ipcRenderer.send('req-userInfo')
         ipcRenderer.on('res-userInfo',(event,data)=>{
+            setcurrentVersion(data.currentVersion)
+            console.log(data)
             if(data.username && data.password){
                 setDisplayLoading(0.8)
-                data.currentVersion = currentVersion;
                 socket.emit('client-login-with-data',data)
             }
         })

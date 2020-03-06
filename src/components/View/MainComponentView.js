@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react'
 
-export default function MainComponentView({Gmail,PassGmail,Point,setPoint,AutoRunTime,setAutoRunTime,setDisplayLoading,UserData,socket}){
+export default function MainComponentView({Gmail,PassGmail,setPoint,setDisplayLoading,UserData,socket}){
     let {user} = UserData;
     const [AutoRunStatus, setAutoRunStatus]= useState(false)
     const [IsNotFirstRender, setIsNotFirstRender]= useState(false)
@@ -10,6 +10,13 @@ export default function MainComponentView({Gmail,PassGmail,Point,setPoint,AutoRu
     const [Time, setTime]= useState(0)
     const [Alert, setAlert] = useState('Vui lòng chờ hệ thống xác thực gmail');
     const [IsWrongFB, setIsWrongFB] = useState(false)
+
+    const reqVideo = useCallback(()=>{
+        setAutoRunStatus(true)
+        setDisplayLoading(0.8)
+        socket.emit('req-list-view',user._id);
+    },[])
+
     useEffect(()=>{
         if(IsWrongFB){
             console.log('wrong-fb')
@@ -18,7 +25,6 @@ export default function MainComponentView({Gmail,PassGmail,Point,setPoint,AutoRu
         }
     },[IsWrongFB,CurrentVideoInfo])
     useEffect(()=>{
-        
         document.querySelector('webview').addEventListener('did-frame-finish-load',e=>{
             if(e.target.src.includes('https://accounts.google.com/')){
                 document.querySelector('webview').executeJavaScript(`
@@ -104,6 +110,10 @@ export default function MainComponentView({Gmail,PassGmail,Point,setPoint,AutoRu
         socket.on('no-video',function(){
             setDisplayLoading(0)
             setAlert('Đã hết video để xem, bạn vui lòng thử lại sau. Để kiếm thêm coin, hãy tham khảo tab kiếm thêm')
+            setURL('https://youtube.com');
+            setTimeout(() => {
+                reqVideo()
+            }, 10000);
         })
     },[])
 
@@ -130,24 +140,7 @@ export default function MainComponentView({Gmail,PassGmail,Point,setPoint,AutoRu
         }
     },[URL,CurrentVideoInfo])
 
-    const reqVideo = useCallback(()=>{
-        setAutoRunStatus(true)
-        setDisplayLoading(0.8)
-        socket.emit('req-list-view',user._id);
-    },[])
-    // function loginGoogle(){
-    //     document.querySelector('webview').executeJavaScript(`
-    //         document.getElementById('identifierId').value = "`+Gmail+`"
-    //         document.getElementById('identifierNext').click()
-    //         setTimeout(() => {
-    //             document.querySelector('#password input').value = "`+PassGmail+`"
-    //             document.getElementById('passwordNext').click();
-    //             setTimeout(()=>{
-    //                 document.body.insertAdjacentHTML('afterbegin','<h1 style="text-align:center;position: relative;z-index: 9999;background-color:#ff8178">Tự động đăng nhập thất bại. Bạn hãy thực hiện đăng nhập bằng tay<h1/>')
-    //             },5000)
-    //         }, 5000);
-    //     `)
-    // }
+    
     return(
         <section id="view">
             <webview style={IsCheckLoginGmail? {width:"100%", height:300, marginTop:20, pointerEvents:'none'}:{width:'100%', height:400,marginTop:20, pointerEvents:"all"}}

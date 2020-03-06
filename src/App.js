@@ -67,13 +67,11 @@ export default function App(){
         setMainComponent(<MainComponentCampain ListVideo={ListVideo} setListVideo={setListVideo} setDisplayLoading={setDisplayLoading} Point={Point} setPoint={setPoint} socket={socket} UserData={UserData}/>)
         }else if(FooterTab === "view"){
         setMainComponent(<MainComponentView
+            ipcRenderer={ipcRenderer}
             Gmail={Gmail}
             PassGmail={PassGmail}
             setDisplayLoading={setDisplayLoading} 
-            setAutoRunTime={setAutoRunTime} 
-            AutoRunTime={AutoRunTime} 
             setPoint={setPoint} 
-            Point={Point} 
             socket={socket} 
             UserData={UserData}/>)
         }else if(FooterTab==="earnmore"){
