@@ -56,7 +56,6 @@ export default function MainComponentLogin(props){
         ipcRenderer.send('req-userInfo')
         ipcRenderer.on('res-userInfo',(event,data)=>{
             setcurrentVersion(data.currentVersion)
-            console.log(data)
             if(data.username && data.password){
                 setDisplayLoading(0.8)
                 socket.emit('client-login-with-data',data)

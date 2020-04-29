@@ -18,6 +18,10 @@ const socket = io('https://ytviewforview.xyz',connectionConfig);
 
 const { ipcRenderer } = window.require("electron");
 
+ipcRenderer.on('restart',()=>{
+    window.close()
+})
+
 export default function App(){
     const [DisplayBar,setDisplayBar] = useState('none');
     const [Point, setPoint] =useState(0);
@@ -40,11 +44,10 @@ export default function App(){
         setUserData(data)
         setListVideo(data.video)
         setDisplayBar('flex')
-        setFooterTab('campain')
         setUser(data.user.username);
         setPoint(data.user.point);
         setAutoRunTime(data.user.autoRun)
-        setFooterTab('campain')
+        setFooterTab('view')
     },[])
     const logoutSuccess = useCallback(()=>{
         setGmail('')
@@ -66,14 +69,7 @@ export default function App(){
         if(FooterTab==="campain"){
         setMainComponent(<MainComponentCampain ListVideo={ListVideo} setListVideo={setListVideo} setDisplayLoading={setDisplayLoading} Point={Point} setPoint={setPoint} socket={socket} UserData={UserData}/>)
         }else if(FooterTab === "view"){
-        setMainComponent(<MainComponentView
-            ipcRenderer={ipcRenderer}
-            Gmail={Gmail}
-            PassGmail={PassGmail}
-            setDisplayLoading={setDisplayLoading} 
-            setPoint={setPoint} 
-            socket={socket} 
-            UserData={UserData}/>)
+        setMainComponent(<MainComponentView ipcRenderer={ipcRenderer} Gmail={Gmail} PassGmail={PassGmail} setDisplayLoading={setDisplayLoading}  setPoint={setPoint}  socket={socket}  UserData={UserData}/>)
         }else if(FooterTab==="earnmore"){
         setMainComponent(<MainComponentEarnmore RefFor={RefFor} setRefFor={setRefFor} RefID={RefID} setRefID={setRefID} setDisplayLoading={setDisplayLoading} setPoint={setPoint} socket={socket} UserData={UserData}/>)
         }else if(FooterTab==="profile"){

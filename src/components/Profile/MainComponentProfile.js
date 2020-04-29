@@ -9,9 +9,9 @@ export default function MainComponentLogin({ipcRenderer,logoutSuccess,socket,set
             setDisplayLoading(0)
             setNoti('Gmail này đã được sử dụng cho tài khoản '+data.username+'.Nếu đó là bạn, hãy sử dụng tài khoản '+data.username+' để sử dụng hoặc tạo Gmail khác để sử dụng cho tài khoản này. Nếu bạn không sở hữu tài khoản đó vui lòng liên hện Fanpage để được hỗ trợ.')
         })
-        socket.on('verifyed',()=>{
+        socket.on('wrong-gmail',()=>{
             setDisplayLoading(0)
-            setNoti('Bạn đã xác thực email rồi. Vui lòng khởi động lại ứng dụng để cập nhật trạng thái')
+            setNoti('Sai định dạng Gmail')
         })
         socket.on('logout-success',()=>{
             setDisplayLoading(0)
@@ -26,11 +26,11 @@ export default function MainComponentLogin({ipcRenderer,logoutSuccess,socket,set
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if(CurrentGmail.match(mailformat) && CurrentGmail.indexOf('@gmail.com') != -1){
             setDisplayLoading(0.8)
-            socket.emit('req-validate-mail',{id:UserData.user._id,gmail:CurrentGmail})
-            socket.on('sended-mail',()=>{
-                socket.removeEventListener('sended-mail')
+            socket.emit('edit-gamil',{id:UserData.user._id,gmail:CurrentGmail})
+            socket.removeEventListener('edit-mail-success')
+            socket.on('edit-mail-success',()=>{
                 setDisplayLoading(0)
-                setNoti('Hệ thống đã gửi mail xác thực. Truy cập liên kết trong thư của tài khoản gmail ' + CurrentGmail + 'để xác thực. Nếu không tìm thấy mail trong hộp thư, vui lòng kiểm tra thư rác/spam. Nếu bạn tìm thấy thư trong thư mục rác/spam vui lòng đánh dấu thư là không spam.')
+                setNoti('Sửa Gmail thành công')
                 setGmail(CurrentGmail)
             })
         }
@@ -58,10 +58,10 @@ export default function MainComponentLogin({ipcRenderer,logoutSuccess,socket,set
 
     return(
         <section id="profile">
-            <p>{UserData.user.isVeryMail ? 'Bạn đã xác thực Gmail, bạn có thể thêm mật khẩu gmail để tự động đăng nhập vào youtube hoặc bạn có thể đăng nhập bằng tay mỗi lần chạy view' : 'Bạn cần nhập đúng gmail để nhận được thư xác thực. Sau khi xác thực xong bạn có thể mua view bình thường'}</p>
+            <p>Nhập ít nhất Gmail để chạy view</p>
             <input value={CurrentGmail} onChange={(e)=>{setCurrentGmail(e.target.value)}} type="text" placeholder="Nhập Gmail" />
-            <input value={CurrentPassGmail} onChange={(e)=>{setCurrentPassGmail(e.target.value)}} type="text" placeholder="Nhập mật khẩu gmail để đăng nhập" />
-            <button onClick={()=>{ValidateEmail()}} style={UserData.user.isVeryMail ? {display:'none'} : {display:'inline-block'}}>Gửi thư xác thực</button>
+            <input value={CurrentPassGmail} onChange={(e)=>{setCurrentPassGmail(e.target.value)}} type="text" placeholder="Nhập mật khẩu gmail để tự đăng nhập" />
+            <button onClick={()=>{ValidateEmail()}}>Cập nhật Gmail</button>
             <button onClick={()=>{editPassGmail()}}>Cập nhật mật khẩu</button>
             <button onClick={()=>{logout()}}>Đăng xuất khỏi thiết bị này</button>
             <p style={{color:'#ff0000'}}>{Noti}</p>

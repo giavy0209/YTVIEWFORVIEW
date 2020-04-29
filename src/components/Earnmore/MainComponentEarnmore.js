@@ -37,7 +37,7 @@ export default function MainComponentView(props){
     return(
         <section id="earnmore">
             <input value={CurrentRefFor} onChange={(e)=>{setCurrentRefFor(e.target.value)}} type="text" placeholder="Nhập mã giới thiệu"/>
-            <button onClick={addRefFor}>Nhập mã giới thiệu nhận 2000Coins</button>
+            <button onClick={addRefFor}>Nhập mã giới thiệu nhận 1000Coins</button>
             <button style={RefID == '' ? {display:'inline-block'} : {display:'none'}} onClick={getRefID}>Lấy mã giới thiệu</button>
             <p>Chia sẽ app nhận 5% số coins kiếm được từ người giới thiệu</p>
             <p>{RefID == '' ? "Bạn chưa có mã giới thiệu" : "Mã giới thiệu của bạn: " + RefID}</p>

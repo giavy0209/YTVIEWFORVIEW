@@ -1,21 +1,20 @@
-import React, {useState, useCallback, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 export default function MainComponentCampain({setDisplayLoading,socket,UserData,Point,setPoint,ListVideo,setListVideo}){
     var {video,user} = UserData;
-    const [Noti, setNoti] = React.useState('');
-    const [VideoID, setVideoID] = React.useState('');
-    const [TotalView, setTotalView] = React.useState(20);
-    const [TotalTime, setTotalTime] = React.useState(60);
+    const [Noti, setNoti] = useState('');
+    const [VideoID, setVideoID] = useState('');
+    const [TotalView, setTotalView] = useState(100);
+    const [TotalTime, setTotalTime] = useState(60);
     const arrTime = [];
     const arrView=[];
-    const [WebRef, setWebRef] = React.useState('');
-    const [BuyAble, setBuyAble] = React.useState(false);
+    const [BuyAble, setBuyAble] = useState(false);
 
     for(let i = 60; i <= 600; i+=30){
         arrTime.push(i+'')
     };
-    for(let i = 20; i <= 1000; i+=20){
+    for(let i = 100; i <= 1000; i+=50){
         arrView.push(i+'')
     }
     
@@ -26,7 +25,6 @@ export default function MainComponentCampain({setDisplayLoading,socket,UserData,
             setDisplayLoading(0.8)
             socket.on('add-video-success',function(newVideo){
                 socket.removeListener('add-video-success')
-                // setThisPoint(ThisPoint-Number(TotalView)*Number(TotalTime))
                 setPoint(Point-Number(TotalView)*Number(TotalTime))
                 setDisplayLoading(0);
                 video.push(newVideo)
@@ -41,19 +39,7 @@ export default function MainComponentCampain({setDisplayLoading,socket,UserData,
             });
         }
     }
-    // function comfirmBuy(){
-    //     Alert.alert(
-    //         'Xác nhận đúng video?',
-    //         'Sau khi mua bạn sẽ không thể sửa lại link nếu sai',
-    //         [
-    //           {
-    //             text: 'Cancel',
-    //           },
-    //           {text: 'OK', onPress: () => buy()},
-    //         ],
-    //         {cancelable: true},
-    //     );
-    // }
+    
     function deleteVideo(id){
         confirmAlert({
             title: 'Xác nhận xóa',
@@ -79,10 +65,10 @@ export default function MainComponentCampain({setDisplayLoading,socket,UserData,
                 onClick: () => {}
               }
             ]
-          });
+        });
     }
 
-    React.useEffect(()=>{
+    useEffect(()=>{
         document.querySelector('webview').addEventListener('did-stop-loading', e=>{
             if(e.target.src.includes('m.facebook.com')){
                 document.querySelector('webview').executeJavaScript(`

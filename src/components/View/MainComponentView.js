@@ -15,6 +15,7 @@ export default function MainComponentView({Gmail,PassGmail,setPoint,setDisplayLo
         setAutoRunStatus(true)
         setDisplayLoading(0.8)
         socket.emit('req-list-view',user._id);
+        setAlert('Ứng dụng đang tự chạy view...')
     },[])
 
     useEffect(()=>{
@@ -62,6 +63,7 @@ export default function MainComponentView({Gmail,PassGmail,setPoint,setDisplayLo
                     if(isRight){
                         setAlert('Bạn đã đăng nhập google thành công. Bạn có thể xem video để kiếm điểm')
                         setIsCheckLoginGmail(true)
+                        reqVideo()
                     }else{
                         setAlert('Tài khoản google bạn nhập không khớp với gmail đã xác thực. Bạn cần nhập đúng gmail đã xác thực')
                     }
@@ -106,14 +108,12 @@ export default function MainComponentView({Gmail,PassGmail,setPoint,setDisplayLo
             setDisplayLoading(0)
             setPoint(data.point)
             reqVideo()
+            
         })
         socket.on('no-video',function(){
             setDisplayLoading(0)
-            setAlert('Đã hết video để xem, bạn vui lòng thử lại sau. Để kiếm thêm coin, hãy tham khảo tab kiếm thêm')
-            setURL('https://youtube.com');
-            setTimeout(() => {
-                reqVideo()
-            }, 10000);
+            setAlert('Đã hết video để xem, bạn vui lòng thử lại sau. Để kiếm thêm coin, hãy tham khảo tab kiếm thêm.Bạn có thể tạo tài khoản khác để chạy tool tiếp')
+            setURL('https://google.com');
         })
     },[])
 
@@ -151,7 +151,7 @@ export default function MainComponentView({Gmail,PassGmail,setPoint,setDisplayLo
             <button 
             style={{position:'relative'}}
             className={AutoRunStatus || !IsCheckLoginGmail ?"button-disable" : ''} 
-            onClick={()=>{reqVideo()}}>
+            onClick={reqVideo}>
                 Xem video
             </button>
             <div className="video-detail">
@@ -162,7 +162,7 @@ export default function MainComponentView({Gmail,PassGmail,setPoint,setDisplayLo
                 <p>{CurrentVideoInfo.totalTime ? CurrentVideoInfo.totalTime*9/10:0}</p>
                 <p>Coins</p>
             </div>
-            <p style={{color:'#ff0000'}}>{Alert}</p>
+            <p style={{color:'#ff0000'}}>{Gmail === '' ? 'Bạn chưa cài đặt Gmail, vui lòng click vào góc trên bên phải để cài đặt gmail' : Alert}</p>
         </section>
     )
 }

@@ -174,9 +174,10 @@ footer .active{
 #earnmore{
     text-align: center;
     display: flex;
-    flex-direction: 'row';
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    text-align: center;
 }
 #earnmore input{
     width: 100%;
@@ -185,7 +186,10 @@ footer .active{
 }
 
 #earnmore button{
+    display: block;
+    margin: 0 auto;
     margin-top: 5px;
+    width: 100%;
 }
 #earnmore p{
     color: aqua;
@@ -210,8 +214,11 @@ footer .active{
     background-color: #000;
     z-index: 99;
     display: block;
+    opacity: 0.5;
+    pointer-events: all;
 }
 .mask-loading.off{
+    pointer-events: none;
     display: none;
 }
 .mask-loading img{
